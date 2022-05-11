@@ -1,5 +1,5 @@
 # Pokemon_viz
-Fun visualisations of data from the Pokémon games!
+[Fun visualisations of data from the Pokémon games!](https://andrewmoles2.github.io/Pokemon_viz/)
 
 We can look at how Ash Ketchum team from the Pokémon tv show stands up in the Pokémon games. 
 ![](ash_pokemon_plot.png)
