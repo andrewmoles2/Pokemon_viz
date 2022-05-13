@@ -163,6 +163,22 @@ ggdraw(
 ggsave(filename = here("outputs", paste0("Mew",".png")),
        dpi = 350, height = 6, width = 6, bg = "white")
 
+# Make gif of selected pokemon to display on README ----
+list.files(path = here("outputs"), pattern = ".png", full.names = T) %>%
+  lapply(., image_read) %>%
+  image_join() %>%
+  image_animate(fps = 1) %>%
+  image_write(path = "pokemon.gif")
+
+# line by line method
+#images <- list.files(here("outputs"), full.names = TRUE)
+#images_list <- lapply(images, image_read)
+#images_joined <- image_join(images_list)
+#images_anim <- image_animate(images_joined, fps = 2)
+#images_anim
+#image_write(image = images_anim,
+#            path = "pokemon.gif")
+
 
 # things to do:
 # loop over fav pokemon and save - done
@@ -170,7 +186,7 @@ ggsave(filename = here("outputs", paste0("Mew",".png")),
 # adjust line colours (slightly darker)
 # use magic lib to grid 6 fav pokemon - without title
 
-# testing out magick ----
+# testing out things with magick ----
 arcanine <- image_read("outputs/Arcanine.png")
 pory <- image_read("outputs/Porygon2.png")
 zap <- image_read("outputs/Zapdos.png")
