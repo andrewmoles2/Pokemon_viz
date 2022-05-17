@@ -112,7 +112,7 @@ for (i in unique(as.character(fav_pokemon_df$name))) {
       geom_col(aes(x=id, y=value, fill=fill2), show.legend = FALSE, alpha = 0.85) +
       geom_text(aes(x = id, y=20, label=value), family="king", size=8, colour = "#252525") +
       geom_pokemon(aes(x=0.5, y =-165.5, image=str_to_lower(name)), size=0.155) +
-      geom_text(aes(x=id,y=160,label=stats), size=16, fontface="bold", family="king") +
+      geom_text(aes(x=id,y=175,label=stats), size=16, fontface="bold", family="king") +
       geom_text(aes(label=str_wrap(name,20)), x=-0.5, y=-40, size=16, fontface = "bold", family = "me_again") +
       geom_text(aes(label=strwrap(
         ifelse(is.na(type2), paste(type1), paste(type1, "&", type2)),20)), 
