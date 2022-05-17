@@ -94,7 +94,8 @@ pokemon <- pokemon |>
 # plotting ----
 # extract favourite pokemon for loop
 # note: geom_pokemon only works for gens 1 and 2! 
-fav_pokemon <- c("Arcanine", "Charizard", "Zapdos", "Gyarados", "Lapras", "Porygon2")
+fav_pokemon <- c("Arcanine", "Zapdos", "Gyarados", "Charizard",
+                 "Lapras", "Porygon2", "Hitmonlee", "Scyther")
 
 fav_pokemon_df <- pokemon |> 
   filter(name %in% fav_pokemon)
@@ -106,9 +107,10 @@ for (i in unique(as.character(fav_pokemon_df$name))) {
     pokemon |> 
       filter(name == i) |> 
       ggplot() +
-      geom_segment(data = data.frame(y=seq(0,250,25)), aes(x=-0.5, xend=6.5, y=y, yend=y), linetype = 2, colour = "grey90") +
-      geom_text(data = data.frame(y=seq(0,250,25)), aes(x=0.06, y=y+0.5, label=y), family="king", size=12, fontface="bold") +
+      geom_segment(data = data.frame(y=seq(0,200,10)), aes(x=-0.5, xend=6.5, y=y, yend=y), linetype = 2, colour = "grey90") +
+      geom_text(data = data.frame(y=seq(0,200,20)), aes(x=0.06, y=y+0.5, label=y), family="king", size=12, fontface="bold") +
       geom_col(aes(x=id, y=value, fill=fill2), show.legend = FALSE, alpha = 0.85) +
+      geom_text(aes(x = id, y=20, label=value), family="king", size=8, colour = "#252525") +
       geom_pokemon(aes(x=0.5, y =-165.5, image=str_to_lower(name)), size=0.155) +
       geom_text(aes(x=id,y=160,label=stats), size=16, fontface="bold", family="king") +
       geom_text(aes(label=str_wrap(name,20)), x=-0.5, y=-40, size=16, fontface = "bold", family = "me_again") +
@@ -140,11 +142,12 @@ ggdraw(
   pokemon |> 
     filter(name == "Mew") |> 
     ggplot() +
-    geom_segment(data = data.frame(y=seq(0,250,25)), aes(x=-0.5, xend=6.5, y=y, yend=y), linetype = 2, colour = "grey90") +
-    geom_text(data = data.frame(y=seq(0,250,25)), aes(x=0.06, y=y+0.5, label=y), family="king", size=12, fontface="bold") +
+    geom_segment(data = data.frame(y=seq(0,200,10)), aes(x=-0.5, xend=6.5, y=y, yend=y), linetype = 2, colour = "grey90") +
+    geom_text(data = data.frame(y=seq(0,200,20)), aes(x=0.06, y=y+0.5, label=y), family="king", size=12, fontface="bold") +
     geom_col(aes(x=id, y=value, fill=fill2), show.legend = FALSE, alpha = 0.85) +
+    geom_text(aes(x = id, y=20, label=value), family="king", size=8, colour = "#252525") +
     geom_pokemon(aes(x=0.5, y =-165.5, image=str_to_lower(name)), size=0.155) +
-    geom_text(aes(x=id,y=160,label=stats), size=16, fontface="bold", family="king") +
+    geom_text(aes(x=id,y=175,label=stats), size=16, fontface="bold", family="king") +
     geom_text(aes(label=str_wrap(name,20)), x=-0.5, y=-40, size=16, fontface = "bold", family = "me_again") +
     geom_text(aes(label=strwrap(
       ifelse(is.na(type2), paste(type1), paste(type1, "&", type2)),20)), 
@@ -181,7 +184,6 @@ list.files(path = here("outputs"), pattern = ".png", full.names = T) %>%
 
 
 # things to do:
-# loop over fav pokemon and save - done
 # adjust text fonts, colours
 # adjust line colours (slightly darker)
 # use magic lib to grid 6 fav pokemon - without title
