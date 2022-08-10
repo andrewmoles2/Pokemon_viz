@@ -42,17 +42,21 @@ theme_andrew <- function(){
         size = 10,
         hjust = 0,
         vjust = 2,
-        colour = "#F1945E"),
+        colour = "#7A0000"),
       plot.caption = element_text(
         family = font,
         size = 9,
         hjust = 1),
+      plot.title.position = "plot",
       axis.title = element_text(
         family = font,
         size = 10),
       axis.text =  element_text(
         family = font,
-        size = 9)
+        size = 9),
+      plot.background = element_rect(fill = "#F1F3F5"),
+      panel.background = element_rect(fill = "#F1F3F5")
+      
     )    
 }
 
@@ -220,16 +224,62 @@ pokemon_raw %>%
   mutate(name = factor(name, levels = ash_pokemon)) %>%
   ggplot(aes(x = name, y = total)) +
   geom_pokemon(aes(image = str_to_lower(ash_pokemon)), size=.125) +
-  geom_hline(yintercept = gen1_avg, linetype = 2) +
+  geom_hline(yintercept = gen1_avg, linetype = 2, colour = "#000E25") +
   scale_y_continuous(limits = c(250,600), breaks = seq(250, 600, 50)) +
-  annotate(geom = "text", x = "Bulbasaur", y = (gen1_avg+10),
-           label = "Generation 1 average total", hjust = "left") +
-  labs(title = "Ash's Pokémon from the first generation",
-       subtitle = "Total statistics in games compared to other Pokémon",
-       x = "Pokémon name",
-       y = "Total Statistics") -> ash_pokemon_plot)
+  annotate(geom = "text", x = "Bulbasaur", y = (gen1_avg+10), 
+           family = "Avenir", label = "First generation average stats", 
+           hjust = "left", size = 5, colour = "#000E25") +
+  annotate(geom = "text", x = "Pidgeot", y = 375,
+           family = "Avenir", label = "Pikachu was better in the TV show!",
+           hjust = "left", size = 4, colour = "#000E25") +
+  annotate(geom = "curve", x = 5.4, y = 370, colour = "#000E25",
+           xend = 5.65, yend = 320, curvature = 0.3, 
+           arrow = arrow(length = unit(2, "mm"))) +
+    annotate(geom = "text", x = "Squirtle", y = 600,
+             family = "Avenir", label = "Charizard is well above average",
+             hjust = "left", size = 4, colour = "#000E25") +
+    annotate(geom = "curve", x = 2.95, y = 600, colour = "#000E25",
+             xend = 2, yend = 552, curvature = 0.3, 
+             arrow = arrow(length = unit(2, "mm"))) +
+  labs(title = "Total Stats of Ash Ketchum's Pokémon from the first generation games",
+       subtitle = "Total stats in games compared to average stats of other first generation Pokémon",
+       x = "",
+       y = "",
+       caption = "Data from https://pokemondb.net/") -> ash_pokemon_plot)
 
-ggsave(here("ash_pokemon_plot.png"), ash_pokemon_plot)
+ggsave(here("ash_pokemon_plot.png"), ash_pokemon_plot,
+       units = "px", dpi = 300, width = 3200, height = 2500)
 
 
+# try and do the same but with the images I added to the dataset
+(pokemon_raw %>%
+  filter(name %in% ash_pokemon) %>%
+  mutate(name = factor(name, levels = ash_pokemon)) %>%
+  ggplot(aes(x = name, y = total)) +
+  geom_image(aes(image = image_url), size = 0.125) +
+  geom_hline(yintercept = gen1_avg, linetype = 2, colour = "#000E25") +
+  scale_y_continuous(limits = c(250,600), breaks = seq(250, 600, 50)) +
+  annotate(geom = "text", x = "Bulbasaur", y = (gen1_avg+10), 
+           family = "Avenir", label = "First generation average stats", 
+           hjust = "left", size = 5, colour = "#000E25") +
+  annotate(geom = "text", x = "Pidgeot", y = 375,
+           family = "Avenir", label = "Pikachu was better in the TV show!",
+           hjust = "left", size = 4, colour = "#000E25") +
+  annotate(geom = "curve", x = 5.4, y = 370, colour = "#000E25",
+           xend = 5.65, yend = 320, curvature = 0.3, 
+           arrow = arrow(length = unit(2, "mm"))) +
+  annotate(geom = "text", x = "Squirtle", y = 600,
+           family = "Avenir", label = "Charizard is well above average",
+           hjust = "left", size = 4, colour = "#000E25") +
+  annotate(geom = "curve", x = 2.95, y = 600, colour = "#000E25",
+           xend = 2, yend = 552, curvature = 0.3, 
+           arrow = arrow(length = unit(2, "mm"))) +
+  labs(title = "Total Stats of Ash Ketchum's Pokémon from the first generation games",
+       subtitle = "Total stats in games compared to average stats of other first generation Pokémon",
+       x = "",
+       y = "",
+       caption = "Data from https://pokemondb.net/") -> ash_pokemon_plot2)
+
+ggsave(here("ash_pokemon_plot2.png"), ash_pokemon_plot2,
+       units = "px", dpi = 300, width = 3200, height = 2500)
 
